@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid black;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Invoice</h1>
+    <h2>Customer Information</h2>
+    <p><strong>Customer ID:</strong> {{ customer_info.id }}</p>
+    <p><strong>Name:</strong> {{ customer_info.firstname }} {{ customer_info.sirname }}</p>
+    <p><strong>Address:</strong> {{ customer_info.address.street }}, {{ customer_info.address.number }}, {{
+        customer_info.address.zipcode }}, {{ customer_info.address.city }}, {{ customer_info.address.country }}</p>
+
+    <h2>Order Components</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Component Name</th>
+                <th>Unit Price</th>
+                <th>Quantity</th>
+                <th>Total Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in order_components %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>{{ item.unit_price }}</td>
+                <td>{{ item.quantity_in_box }}</td>
+                <td>{{ item.unit_price * item.quantity_in_box }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <p><strong>Total Amount:</strong> {{ total_price }}</p>
+
+    <p><a href="{{ url_for('download_invoice', customer_no=customer_info.id, order_no=order_no) }}"
+            target="_blank">Download as PDF</a></p>
+</body>
+
+</html>

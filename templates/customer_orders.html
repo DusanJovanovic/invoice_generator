@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Orders</title>
+</head>
+
+<body>
+    <h1>Customer Orders</h1>
+    <h2>Customer Information</h2>
+    <p><strong>Customer ID:</strong> {{ customer.id }}</p>
+    <p><strong>Name:</strong> {{ customer.salutation }} {{ customer.firstname }} {{ customer.sirname }}</p>
+    <p><strong>Address:</strong> {{ customer.address.street }}, {{ customer.address.number }}, {{
+        customer.address.zipcode }}, {{ customer.address.city }}, {{ customer.address.country }}</p>
+
+    <h2>Orders</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Order No</th>
+                <th>Product Name</th>
+                <th>Delivery Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{ order.order_no }}</td>
+                <td>{{ order.name }}</td>
+                <td>{{ order.delivery_date }}</td>
+                <td>
+                    <a
+                        href="{{ url_for('show_invoice', customer_no=customer.id, order_no=order.order_no) }}">Invoice</a>
+                    <a href="{{ url_for('view_stacks', customer_no=customer.id, order_no=order.order_no) }}">View
+                        Stacks</a>
+
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+
+</html>
